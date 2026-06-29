@@ -16,16 +16,26 @@ if (isset($data->username) && isset($data->password)) {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         if (password_verify($password, $row['password'])) {
-            // Success
+            $access_token = bin2hex(random_bytes(32));
+            $refresh_token = bin2hex(random_bytes(32));
+            $expires_at = date("Y-m-d H:i:s", strtotime("+1 hour"));
+            $user_id = $row['id'];
+            
+            $insert_stmt = $conn->prepare("INSERT INTO user_tokens (user_id, access_token, refresh_token, expires_at) VALUES (?, ?, ?, ?)");
+            $insert_stmt->bind_param("isss", $user_id, $access_token, $refresh_token, $expires_at);
+            $insert_stmt->execute();
+            $insert_stmt->close();
+
             http_response_code(200);
             echo json_encode([
                 "status" => "success",
                 "message" => "Login successful",
                 "user" => [
-                    "id" => $row['id'],
+                    "id" => $user_id,
                     "username" => $row['username']
                 ],
-                "token" => base64_encode(random_bytes(32)) // Mock token, for real app use JWT
+                "access_token" => $access_token,
+                "refresh_token" => $refresh_token
             ]);
         } else {
             // Invalid password

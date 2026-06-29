@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="SwaggerUI" />
+  <title>Travel Management System API - Swagger UI</title>
+  
+  <!-- Modern Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui.css" />
+  
+  <style>
+    :root {
+      --primary-color: #4F46E5; /* Elegant Indigo */
+      --secondary-color: #6366F1;
+      --bg-color: #F8FAFC; /* Very soft background */
+      --surface-color: #FFFFFF; /* Pure white for cards */
+      --text-main: #0F172A; /* Dark text */
+      --text-muted: #64748B; /* Gray text */
+      --border-color: #E2E8F0; /* Light borders */
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      font-family: 'Inter', sans-serif !important;
+      color: var(--text-main);
+    }
+
+    .swagger-ui {
+      font-family: 'Inter', sans-serif !important;
+      color: var(--text-main);
+    }
+
+    /* Hide the top bar completely */
+    .topbar {
+      display: none !important;
+    }
+
+    /* Main Info Section */
+    .swagger-ui .info {
+      margin: 50px 0;
+    }
+    
+    .swagger-ui .info .title {
+      color: var(--text-main) !important;
+      font-weight: 700;
+      font-size: 36px;
+    }
+
+    .swagger-ui .info p {
+      color: var(--text-muted) !important;
+      font-size: 16px;
+    }
+
+    /* Scheme Container (Authorize section) */
+    .swagger-ui .scheme-container {
+      background-color: var(--surface-color);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      border-radius: 12px;
+      margin-bottom: 40px;
+      padding: 20px 30px;
+      border: 1px solid var(--border-color);
+    }
+
+    /* Buttons */
+    .swagger-ui .btn {
+      font-family: 'Inter', sans-serif !important;
+      font-weight: 600;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      box-shadow: none !important;
+    }
+
+    .swagger-ui .btn.authorize {
+      background-color: #10B981 !important;
+      color: white !important;
+      border-color: #10B981 !important;
+    }
+    
+    .swagger-ui .btn.authorize:hover {
+      background-color: #059669 !important;
+      border-color: #059669 !important;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2) !important;
+    }
+
+    .swagger-ui .btn.execute {
+      background-color: var(--primary-color) !important;
+      color: white !important;
+      border-color: var(--primary-color) !important;
+    }
+
+    .swagger-ui .btn.execute:hover {
+      background-color: #4338CA !important;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2) !important;
+    }
+
+    /* Operation Blocks */
+    .swagger-ui .opblock {
+      background-color: var(--surface-color) !important;
+      border-radius: 12px !important;
+      border: 1px solid var(--border-color) !important;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+      margin-bottom: 15px !important;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .swagger-ui .opblock:hover {
+      border-color: var(--secondary-color) !important;
+      box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .swagger-ui .opblock .opblock-summary {
+      border-color: var(--border-color) !important;
+      padding: 10px 20px !important;
+    }
+
+    .swagger-ui .opblock .opblock-summary-method {
+      border-radius: 6px !important;
+      font-weight: 700 !important;
+      text-shadow: none !important;
+      color: white !important;
+    }
+
+    .swagger-ui .opblock .opblock-summary-path {
+      color: var(--text-main) !important;
+      font-size: 16px !important;
+      font-weight: 600 !important;
+    }
+
+    .swagger-ui .opblock .opblock-summary-description {
+      color: var(--text-muted) !important;
+    }
+
+    /* Operation Colors */
+    .swagger-ui .opblock.opblock-post { background-color: rgba(73, 204, 144, 0.02) !important; border-color: rgba(73, 204, 144, 0.3) !important; }
+    .swagger-ui .opblock.opblock-post .opblock-summary-method { background: #10B981 !important; }
+    
+    .swagger-ui .opblock.opblock-get { background-color: rgba(97, 175, 254, 0.02) !important; border-color: rgba(97, 175, 254, 0.3) !important; }
+    .swagger-ui .opblock.opblock-get .opblock-summary-method { background: #3B82F6 !important; }
+
+    /* Parameters and Responses tables */
+    .swagger-ui table thead tr th {
+      color: var(--text-muted) !important;
+      font-family: 'Inter', sans-serif !important;
+      border-bottom: 1px solid var(--border-color) !important;
+    }
+
+    .swagger-ui table tbody tr td {
+      color: var(--text-main) !important;
+      border-bottom: 1px solid var(--border-color) !important;
+    }
+
+    /* Inputs */
+    .swagger-ui input[type=text], 
+    .swagger-ui input[type=password],
+    .swagger-ui textarea {
+      background-color: var(--surface-color) !important;
+      color: var(--text-main) !important;
+      border: 1px solid var(--border-color) !important;
+      border-radius: 6px !important;
+      font-family: 'Inter', sans-serif !important;
+      transition: all 0.2s;
+    }
+
+    .swagger-ui input[type=text]:focus, 
+    .swagger-ui input[type=password]:focus,
+    .swagger-ui textarea:focus {
+      border-color: var(--primary-color) !important;
+      outline: none !important;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1) !important;
+    }
+
+    /* Response sections */
+    .swagger-ui .responses-inner h4, .swagger-ui .responses-inner h5 {
+      color: var(--text-main) !important;
+    }
+    
+    .swagger-ui .response-col_status {
+      color: var(--text-main) !important;
+      font-weight: 700 !important;
+    }
+
+    /* Code snippets */
+    .swagger-ui .highlight-code {
+      background-color: #F1F5F9 !important; /* Lighter gray for code blocks */
+      border-radius: 8px !important;
+      border: 1px solid var(--border-color) !important;
+    }
+    
+    .swagger-ui .highlight-code pre {
+      color: var(--text-main) !important;
+    }
+
+    .swagger-ui .model-box {
+      background-color: #F8FAFC !important;
+      border-radius: 8px !important;
+      border: 1px solid var(--border-color) !important;
+    }
+
+    /* Dropdowns */
+    .swagger-ui select {
+      background-color: var(--surface-color) !important;
+      color: var(--text-main) !important;
+      border: 1px solid var(--border-color) !important;
+      border-radius: 6px !important;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-color); 
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #CBD5E1; 
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94A3B8; 
+    }
+  </style>
+</head>
+<body>
+<div id="swagger-ui"></div>
+<script src="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-bundle.js" crossorigin></script>
+<script>
+  window.onload = () => {
+    window.ui = SwaggerUIBundle({
+      url: 'swagger.json',
+      dom_id: '#swagger-ui',
+      presets: [
+        SwaggerUIBundle.presets.apis,
+        SwaggerUIBundle.SwaggerUIStandalonePreset
+      ],
+      layout: "BaseLayout",
+      deepLinking: true,
+      showExtensions: true,
+      showCommonExtensions: true,
+      docExpansion: "list",
+      defaultModelsExpandDepth: -1 /* Hides the Models section at bottom */
+    });
+  };
+</script>
+</body>
+</html>
